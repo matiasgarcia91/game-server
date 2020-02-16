@@ -20,7 +20,9 @@ router.post("/login", async (req, res, next) => {
       const validPass = bcrypt.compareSync(password, user.password);
       if (validPass) {
         res.send({
-          jwt: toJWT({ userId: user.id })
+          jwt: toJWT({ userId: user.id }),
+          nickname: user.nickname,
+          email: user.email
         });
       } else {
         res.status(400).send({

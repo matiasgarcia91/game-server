@@ -6,6 +6,7 @@ const authMiddleware = require("./auth/middleware");
 
 const userRouter = require("./user/router");
 const authRouter = require("./auth/router");
+const { streamRouter } = require("./stream/router");
 
 const app = express();
 const port = 4000;
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use(userRouter);
 app.use(authRouter);
+app.use(streamRouter);
 
 app.get("/test", authMiddleware, (req, res, next) => {
   res.send(`Entraste capo, sos este boludo: ${req.user.first_name}`);

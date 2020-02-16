@@ -4,8 +4,7 @@ const Sequelize = require("sequelize");
 const User = db.define(
   "user",
   {
-    first_name: Sequelize.STRING,
-    last_name: Sequelize.STRING,
+    nickname: Sequelize.STRING,
     email: {
       type: Sequelize.STRING,
       allowNull: false
