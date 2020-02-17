@@ -5,7 +5,7 @@ const authMiddleware = require("./auth/middleware");
 
 const userRouter = require("./user/router");
 const authRouter = require("./auth/router");
-const gameRoomRouter = require("./gameRoom/router");
+const roomRouter = require("./room/router");
 const { streamRouter, stream } = require("./stream/router");
 
 const app = express();
@@ -18,6 +18,6 @@ app.use(express.json());
 app.use(userRouter);
 app.use(authRouter);
 app.use("/stream", streamRouter);
-app.use("/gameRoom", authMiddleware, gameRoomRouter(stream));
+app.use("/room", authMiddleware, roomRouter(stream));
 
 app.listen(port, () => console.log(`Listening on :${port}`));

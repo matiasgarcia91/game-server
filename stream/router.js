@@ -1,6 +1,6 @@
 const Sse = require("json-sse");
 const { Router } = require("express");
-const GameRoom = require("./../gameRoom/model");
+const Room = require("./../room/model");
 
 const stream = new Sse();
 
@@ -9,9 +9,9 @@ const router = new Router();
 // get on the stream
 router.get("/", async (request, response, next) => {
   try {
-    const allRooms = await GameRoom.findAll();
+    const allRooms = await Room.findAll();
     const action = {
-      type: "gameroom/ALL_ROOMS",
+      type: "room/ALL_ROOMS",
       payload: allRooms
     };
     const json = JSON.stringify(action);
