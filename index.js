@@ -9,7 +9,7 @@ const roomRouter = require("./room/router");
 const { streamRouter, stream } = require("./stream/router");
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const corsMiddleware = cors();
 app.use(corsMiddleware);
