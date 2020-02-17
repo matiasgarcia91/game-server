@@ -1,5 +1,6 @@
 const db = require("../db");
 const Sequelize = require("sequelize");
+const GameRoom = require("./../gameRoom/model");
 
 const User = db.define(
   "user",
@@ -18,5 +19,7 @@ const User = db.define(
     timestamps: false
   }
 );
+
+User.belongsTo(GameRoom);
 
 module.exports = User;

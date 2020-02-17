@@ -1,5 +1,6 @@
 const Sse = require("json-sse");
 const { Router } = require("express");
+const GameRoom = require("./../gameRoom/model");
 
 const stream = new Sse();
 
@@ -12,12 +13,16 @@ const iAmLive = stream => {
 };
 
 // get on the stream
-router.get("/stream", async (request, response, next) => {
+router.get("/", async (request, response, next) => {
   try {
-    const json = JSON.stringify("Hi welcome to my stream");
+    const allRooms = await GameRoom.findAll();
+    const action = {
+      type: "gameroom/ALL_ROOMS",
+      payload: allRooms
+    };
+    const json = JSON.stringify(action);
     stream.updateInit(json);
     stream.init(request, response);
-    iAmLive(stream);
   } catch (error) {
     next(error);
   }

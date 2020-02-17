@@ -1,12 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-//const Sse = require("json-sse");
+const Sse = require("json-sse");
 
 const authMiddleware = require("./auth/middleware");
 
 const userRouter = require("./user/router");
 const authRouter = require("./auth/router");
-const { streamRouter } = require("./stream/router");
+const gameRoomRouter = require("./gameRoom/router");
+const { streamRouter, stream } = require("./stream/router");
 
 const app = express();
 const port = 4000;
@@ -17,15 +18,14 @@ app.use(express.json());
 
 app.use(userRouter);
 app.use(authRouter);
-app.use(streamRouter);
+app.use("/stream", streamRouter);
+app.use("/gameRoom", authMiddleware, gameRoomRouter(stream));
 
 app.get("/test", authMiddleware, (req, res, next) => {
   res.send(`Entraste capo, sos este boludo: ${req.user.first_name}`);
 });
 
 app.listen(port, () => console.log(`Listening on :${port}`));
-
-// const stream = new Sse();
 
 // const iAmLive = stream => {
 //   setInterval(() => {
