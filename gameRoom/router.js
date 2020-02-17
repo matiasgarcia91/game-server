@@ -8,7 +8,7 @@ function factory(stream) {
     try {
       const { name } = req.body;
       const newRoom = await GameRoom.create({ name });
-      console.log(newRoom);
+
       const action = {
         type: "gameroom/ONE_ROOM",
         payload: newRoom

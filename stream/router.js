@@ -6,12 +6,6 @@ const stream = new Sse();
 
 const router = new Router();
 
-const iAmLive = stream => {
-  setInterval(() => {
-    stream.send("I'm alive!");
-  }, 2000);
-};
-
 // get on the stream
 router.get("/", async (request, response, next) => {
   try {
