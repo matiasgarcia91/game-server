@@ -1,11 +1,12 @@
 const { Router } = require("express");
-const Room = require("./../room/model");
+const _ = require("lodash");
 const Game = require("./model");
+const words = require("./words");
 
 function factory(stream) {
   const router = new Router();
 
-  router.post("/game/ready", async (req, res, next) => {
+  router.post("/ready", async (req, res, next) => {
     try {
       const {
         user,
@@ -25,23 +26,16 @@ function factory(stream) {
             results: [
               { id: p1.id, name: p1.nickname, score: 0 },
               { id: user.id, name: user.nickname, score: 0 }
-            ]
+            ],
+            words: _.shuffle(words)
           }
         });
         stream.send(startingGame);
       }
+      res.send("Ready to start!");
     } catch (e) {
       next(e);
     }
-  });
-
-  router.post("/join", async (req, res, next) => {
-    const {
-      user,
-      body: { roomId }
-    } = req;
-    const updatedUser = await user.update({ roomId: roomId });
-    res.json(updatedUser);
   });
 
   return router;
